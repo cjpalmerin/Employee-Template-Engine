@@ -1,3 +1,4 @@
+const Employee = require("./lib/Employee")
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -66,8 +67,10 @@ function managerQuestions() {
         name: "officeNumber"
       },
   ])
-  .then(function(managerRes) {
-    employeeArray.push(managerRes);
+  .then(function(res) {
+    var newManager = new Manager(res.name, res.id, res.email, res.officeNumber);
+    console.log(newManager);
+    employeeArray.push(newManager);
     console.log(employeeArray);
     addMoreEmployees();
     
@@ -92,13 +95,16 @@ function engineerQuestions() {
          name: "email"
        },
        {
-           type: "number",
+           type: "input",
            message: "What is their Github username?",
            name: "github"
          },
      ])
-     .then(function(engineerRes) {
-        render[engineerRes]        
+     .then(function(res) {
+        var newEngineer = new Engineer(res.name, res.id, res.email, res.github);
+        employeeArray.push(newEngineer);
+        console.log(employeeArray);
+        addMoreEmployees();     
      });
    }
 
@@ -125,8 +131,11 @@ function internQuestions() {
            name: "school"
          },
      ])
-     .then(function(internRes) {
-        render([internRes]);
+     .then(function(res) {
+        var newIntern = new Intern(res.name, res.id, res.email, res.school);
+        employeeArray.push(newIntern);
+        console.log(employeeArray);
+        addMoreEmployees();
     });
    }
 
@@ -144,6 +153,18 @@ function internQuestions() {
         }
         if (response.yesOrNo === "No"){
             render(employeeArray);
+            console.log(render(employeeArray));
+
+            fs.writeFile("team.html", render(employeeArray), function(err) {
+
+                if (err) {
+                  return console.log(err);
+                }
+                console.log("Success!");
+              
+              });
+
+
         }
     });
    }
@@ -157,8 +178,6 @@ function internQuestions() {
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
 // `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
 
 
 
