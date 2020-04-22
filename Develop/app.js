@@ -14,6 +14,118 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
+inquirer
+  .prompt([
+    {
+      type: "input",
+      message: "Are you a Manager, Engineer or Intern?",
+      name: "role",
+    },
+  ])
+  .then(function(response) {
+    if (response.role === 'Manager') {
+        managerQuestions();
+
+    }
+    if (response.role === 'Engineer') {
+        engineerQuestions();
+
+    }
+    if (response.role === 'Intern') {
+        internQuestions();
+        
+    }
+    else {
+        console.log("Please enter a valid role. (Manager, Engineer, Intern.)")
+    }
+    }
+  );
+
+function managerQuestions() {
+ inquirer.prompt([
+    {
+      type: "input",
+      message: "You selected Manager. What is your name?",
+      name: "name"
+    },
+    {
+      type: "input",
+      message: "What is your id?",
+      name: "id"
+    },
+    {
+      type: "input",
+      message: "What is your email?",
+      name: "email"
+    },
+    {
+        type: "number",
+        message: "What is your office number?",
+        name: "officeNumber"
+      },
+  ])
+  .then(function(res) {
+
+  });
+}
+
+function engineerQuestions() {
+    inquirer.prompt([
+       {
+         type: "input",
+         message: "You selected Engineer. What is your name?",
+         name: "name"
+       },
+       {
+         type: "input",
+         message: "What is your id?",
+         name: "id"
+       },
+       {
+         type: "input",
+         message: "What is your email?",
+         name: "email"
+       },
+       {
+           type: "number",
+           message: "What is your Github username?",
+           name: "github"
+         },
+     ])
+     .then(function(res) {
+   
+     });
+   }
+
+function internQuestions() {
+    inquirer.prompt([
+       {
+         type: "input",
+         message: "You selected Intern. What is your name?",
+         name: "name"
+       },
+       {
+         type: "input",
+         message: "What is your id?",
+         name: "id"
+       },
+       {
+         type: "input",
+         message: "What is your email?",
+         name: "email"
+       },
+       {
+           type: "input",
+           message: "What school did you go to?",
+           name: "school"
+         },
+     ])
+     .then(function(res) {
+   
+     });
+   }
+
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
