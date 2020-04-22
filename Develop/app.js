@@ -14,58 +14,63 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-inquirer
-  .prompt([
-    {
-      type: "input",
-      message: "Are you a Manager, Engineer or Intern?",
-      name: "role",
-    },
-  ])
-  .then(function(response) {
-    if (response.role === 'Manager') {
-        managerQuestions();
+const employeeArray = []
 
-    }
-    if (response.role === 'Engineer') {
-        engineerQuestions();
+roleSelect();
 
+function roleSelect() {
+    inquirer
+    .prompt([
+        {
+        type: "input",
+        message: "Please select Manager, Engineer or Intern?",
+        name: "role",
+        },
+    ])
+    .then(function(response) {
+        if (response.role === 'Manager') {
+            managerQuestions();
+
+        }
+        if (response.role === 'Engineer') {
+            engineerQuestions();
+
+        }
+        if (response.role === 'Intern') {
+            internQuestions();
+            
+        }
+    });
     }
-    if (response.role === 'Intern') {
-        internQuestions();
-        
-    }
-    else {
-        console.log("Please enter a valid role. (Manager, Engineer, Intern.)")
-    }
-    }
-  );
 
 function managerQuestions() {
  inquirer.prompt([
     {
       type: "input",
-      message: "You selected Manager. What is your name?",
+      message: "You selected Manager. What is their name?",
       name: "name"
     },
     {
       type: "input",
-      message: "What is your id?",
+      message: "What is their id?",
       name: "id"
     },
     {
       type: "input",
-      message: "What is your email?",
+      message: "What is their email?",
       name: "email"
     },
     {
         type: "number",
-        message: "What is your office number?",
+        message: "What is their office number?",
         name: "officeNumber"
       },
   ])
-  .then(function(res) {
-
+  .then(function(managerRes) {
+    employeeArray.push(managerRes);
+    console.log(employeeArray);
+    addMoreEmployees();
+    
   });
 }
 
@@ -73,27 +78,27 @@ function engineerQuestions() {
     inquirer.prompt([
        {
          type: "input",
-         message: "You selected Engineer. What is your name?",
+         message: "You selected Engineer. What is their name?",
          name: "name"
        },
        {
          type: "input",
-         message: "What is your id?",
+         message: "What is their id?",
          name: "id"
        },
        {
          type: "input",
-         message: "What is your email?",
+         message: "What is their email?",
          name: "email"
        },
        {
            type: "number",
-           message: "What is your Github username?",
+           message: "What is their Github username?",
            name: "github"
          },
      ])
-     .then(function(res) {
-   
+     .then(function(engineerRes) {
+        render[engineerRes]        
      });
    }
 
@@ -101,28 +106,46 @@ function internQuestions() {
     inquirer.prompt([
        {
          type: "input",
-         message: "You selected Intern. What is your name?",
+         message: "You selected Intern. What is their name?",
          name: "name"
        },
        {
          type: "input",
-         message: "What is your id?",
+         message: "What is their id?",
          name: "id"
        },
        {
          type: "input",
-         message: "What is your email?",
+         message: "What is their email?",
          name: "email"
        },
        {
            type: "input",
-           message: "What school did you go to?",
+           message: "What school did they go to?",
            name: "school"
          },
      ])
-     .then(function(res) {
-   
-     });
+     .then(function(internRes) {
+        render([internRes]);
+    });
+   }
+
+   function addMoreEmployees() {
+    inquirer.prompt([
+        {
+          type: "input",
+          message: "Add another employee? Yes or No?",
+          name: "yesOrNo"
+        }
+    ])
+    .then(function(response) {
+        if(response.yesOrNo === "Yes") {
+            roleSelect();
+        }
+        if (response.yesOrNo === "No"){
+            render(employeeArray);
+        }
+    });
    }
 
 
@@ -130,18 +153,16 @@ function internQuestions() {
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
 
+
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
 // `output` folder. You can use the variable `outputPath` above target this location.
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
 
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
 
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+
+
+
+
+
