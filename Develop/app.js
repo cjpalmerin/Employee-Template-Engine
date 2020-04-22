@@ -24,7 +24,7 @@ function roleSelect() {
     .prompt([
         {
         type: "input",
-        message: "Please select Manager, Engineer or Intern?",
+        message: "Please select Manager, Engineer or Intern:",
         name: "role",
         },
     ])
@@ -69,7 +69,6 @@ function managerQuestions() {
   ])
   .then(function(res) {
     var newManager = new Manager(res.name, res.id, res.email, res.officeNumber);
-    console.log(newManager);
     employeeArray.push(newManager);
     console.log(employeeArray);
     addMoreEmployees();
@@ -153,35 +152,18 @@ function internQuestions() {
         }
         if (response.yesOrNo === "No"){
             render(employeeArray);
-            console.log(render(employeeArray));
 
-            fs.writeFile("team.html", render(employeeArray), function(err) {
+        fs.writeFile("output/team.html", render(employeeArray), function(err) {
 
-                if (err) {
-                  return console.log(err);
-                }
-                console.log("Success!");
-              
-              });
+            if (err) {
+                return console.log(err);
+            }
+            console.log("Success!");
+            
+            });
 
 
         }
     });
    }
-
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-
-
-
-
-
-
 
